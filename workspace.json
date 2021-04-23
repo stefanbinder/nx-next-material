@@ -1,10 +1,99 @@
 {
-  
-  
   "version": 2,
-  
-  "projects": {},
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/next"
+  },
+  "defaultProject": "the-next-app",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "@emotion/styled",
+        "linter": "eslint"
+      }
+    }
+  },
+  "projects": {
+    "the-next-app": {
+      "root": "apps/the-next-app",
+      "sourceRoot": "apps/the-next-app",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/the-next-app",
+            "outputPath": "dist/apps/the-next-app"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "the-next-app:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "the-next-app:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "the-next-app:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/the-next-app"],
+          "options": {
+            "jestConfig": "apps/the-next-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/the-next-app/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "the-next-app-e2e": {
+      "root": "apps/the-next-app-e2e",
+      "sourceRoot": "apps/the-next-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/the-next-app-e2e/cypress.json",
+            "tsConfig": "apps/the-next-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "the-next-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "the-next-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/the-next-app-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
   }
 }

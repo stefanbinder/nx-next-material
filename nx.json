@@ -1,8 +1,4 @@
 {
-  "npmScope": "nx-next-material",
-  "affected": {
-    "defaultBase": "master"
-  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -10,18 +6,25 @@
     },
     ".eslintrc.json": "*"
   },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "npmScope": "nx-next-material",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "the-next-app": {
+      "tags": []
+    },
+    "the-next-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["the-next-app"]
+    }
+  }
 }
